@@ -1,0 +1,185 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f4f8;
+    color: #2c3e50;
+    line-height: 1.6;
+    padding: 40px 20px;
+}
+
+/* Estilos para tu encabezado */
+h1 {
+    text-align: center;
+    color: #1a365d;
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+}
+
+body>p {
+    text-align: center;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto 15px auto;
+}
+
+h2 {
+    text-align: center;
+    color: #2b6cb0;
+    /* Un azul tranquilo */
+    margin: 40px 0 20px 0;
+}
+
+/* El contenedor donde tu JS va a inyectar las tarjetas */
+#contenedor-servicios {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que bajen de renglón si no caben */
+    justify-content: center;
+    gap: 25px;
+    /* Espacio entre tarjetas */
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Diseño de las tarjetas creadas desde JS */
+.tarjeta-servicio {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 30px;
+    width: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    /* Sombra súper suave */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover: se levanta un poquito al pasar el mouse */
+.tarjeta-servicio:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tarjeta-servicio h3 {
+    color: #2b6cb0;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #ebf8ff;
+    padding-bottom: 10px;
+}
+
+.tarjeta-servicio p {
+    text-align: left;
+    font-size: 0.95rem;
+    color: #4a5568;
+    margin-bottom: 0;
+}
+
+/* Icono/logo dentro de cada tarjeta */
+.tarjeta-icono {
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 15px auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.tarjeta-servicio:hover .tarjeta-icono {
+    transform: scale(1.15);
+}
+
+/* --- Nuevo estilo para la imagen en dsf.html --- */
+.imagen-servicio {
+    display: block;
+    /* Necesario para centrarla */
+    margin: 30px auto;
+    /* Arriba/Abajo 30px, Auto para centrar horizontalmente */
+    max-width: 80%;
+    /* Que no ocupe todo el ancho de la página */
+    height: auto;
+    /* Mantiene la proporción para que no se deforme */
+    border-radius: 12px;
+    /* Bordes redondeados para combinar con las tarjetas */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    /* Sombra suave para dar profundidad */
+    border: 3px solid #ffffff;
+    /* Un pequeño marco blanco elegante */
+}
+
+/* El contenedor donde tu JS va a inyectar las tarjetas */
+#contenedor-inicio,
+#contenedor-dsf,
+#contenedor-adb,
+#contenedor-gr {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que bajen de renglón si no caben */
+    justify-content: center;
+    gap: 25px;
+    /* Espacio entre tarjetas */
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* --- Botón para regresar al inicio --- */
+body .btn-inicio {
+    display: block;
+    width: fit-content;
+    margin: 30px auto;
+    padding: 12px 30px;
+    background-color: #2b6cb0;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-inicio:hover {
+    background-color: #1a365d;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-inicio:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.contenedor-btn-inicio {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* --- Badges de Validación W3C --- */
+.w3c-badges {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.w3c-badges:hover {
+    opacity: 1;
+}
+
+.w3c-badges img {
+    border: 0;
+    height: 31px;
+    width: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
