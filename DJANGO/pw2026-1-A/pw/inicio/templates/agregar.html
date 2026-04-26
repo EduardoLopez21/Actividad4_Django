@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}?v={{ now }}">
+    <title>Agregar Nuevo Servicio</title>
+</head>
+
+<body>
+    <h1>Agregar Nuevo Servicio</h1>
+    <p>Completa el siguiente formulario para registrar un nuevo servicio en tu portafolio.</p>
+
+    <div class="contenedor-formulario">
+        <!-- novalidate se usa para que puedas ver los mensajes de error personalizados de Django (sugerencias) en caso de fallar, como pide la rúbrica -->
+        <form method="post" action="{% url 'agregar_servicio' %}" novalidate>
+            {% csrf_token %}
+            
+            <div class="form-grupo">
+                <label for="{{ form.categoria.id_for_label }}">Categoría:</label>
+                {{ form.categoria }}
+                {% if form.categoria.errors %}
+                    <div class="error-mensaje">
+                        {% for error in form.categoria.errors %}
+                            <p><strong>Error:</strong> {{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-grupo">
+                <label for="{{ form.titulo.id_for_label }}">Título del Servicio:</label>
+                {{ form.titulo }}
+                {% if form.titulo.errors %}
+                    <div class="error-mensaje">
+                        {% for error in form.titulo.errors %}
+                            <p><strong>Error:</strong> {{ error }} <br><small>Sugerencia: Revisa que la longitud sea entre 3 y 50 caracteres.</small></p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-grupo">
+                <label for="{{ form.descripcion.id_for_label }}">Descripción:</label>
+                {{ form.descripcion }}
+                {% if form.descripcion.errors %}
+                    <div class="error-mensaje">
+                        {% for error in form.descripcion.errors %}
+                            <p><strong>Error:</strong> {{ error }} <br><small>Sugerencia: Escribe al menos 10 caracteres explicativos.</small></p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-grupo" id="grupo-url">
+                <label for="{{ form.url.id_for_label }}">URL de destino (Opcional):</label>
+                {{ form.url }}
+                {% if form.url.errors %}
+                    <div class="error-mensaje">
+                        {% for error in form.url.errors %}
+                            <p><strong>Error:</strong> {{ error }} <br><small>Sugerencia: Proporciona un enlace válido (o déjalo como #).</small></p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-grupo">
+                <label for="{{ form.icono.id_for_label }}">URL del Ícono (Opcional):</label>
+                {{ form.icono }}
+                {% if form.icono.errors %}
+                    <div class="error-mensaje">
+                        {% for error in form.icono.errors %}
+                            <p><strong>Error:</strong> {{ error }} <br><small>Sugerencia: Debe ser un enlace válido a una imagen.</small></p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn-submit">Guardar Servicio</button>
+            <a href="{% url 'inicio' %}" class="btn-cancelar">Cancelar</a>
+        </form>
+    </div>
+
+    <!-- W3C Badges -->
+    <div class="w3c-badges">
+        <a href="https://validator.w3.org/check?uri=referer" target="_blank">
+            <img src="https://www.w3.org/html/logo/badge/html5-badge-h-solo.png" alt="Valid HTML5" title="HTML5 Válido">
+        </a>
+        <a href="https://jigsaw.w3.org/css-validator/check/referer" target="_blank">
+            <img src="https://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS" title="CSS Válido">
+        </a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const categoriaSelect = document.getElementById("id_categoria");
+            const grupoUrl = document.getElementById("grupo-url");
+            
+            function toggleUrlField() {
+                // Ocultar el campo URL si la categoría es "inicio"
+                if (categoriaSelect.value === 'inicio') {
+                    grupoUrl.style.display = 'none';
+                } else {
+                    grupoUrl.style.display = 'block';
+                }
+            }
+            
+            categoriaSelect.addEventListener("change", toggleUrlField);
+            // Ejecutar al cargar la página por si "inicio" está seleccionado por defecto
+            toggleUrlField();
+        });
+    </script>
+</body>
+
+</html>

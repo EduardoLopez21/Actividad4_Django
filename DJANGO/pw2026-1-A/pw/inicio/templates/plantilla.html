@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}?v={{ now }}">
+    <title>Servicios de un ING ISC</title>
+</head>
+
+<body>
+    <h1>Portafolio de un Ingeniero en sistemas</h1>
+    <p>Un ingeniero en sistemas tiene distintos servicios en el area laboral, aqui podras conocer mas sobre ellos.</p>
+    <p>Integrantes de grupo: Eduardo Lopez Martinez y Luis Antonio Arguello Escutia</p>
+
+    <h2>Secciones</h2>
+
+    <div class="contenedor-btn-inicio">
+        <a href="{% url 'agregar_servicio' %}" class="btn-submit" style="text-decoration:none;">Agregar Nuevo
+            Servicio</a>
+    </div>
+
+    <div id="contenedor-inicio"></div>
+
+    <!-- Inyectamos los servicios nuevos desde Django (Sesión) -->
+    <script>
+        const nuevosServiciosDjango = JSON.parse('{{ nuevos_servicios_json|escapejs }}');
+    </script>
+
+    <!-- W3C Badges -->
+    <div class="w3c-badges">
+        <a href="https://validator.w3.org/check?uri=referer" target="_blank">
+            <img src="https://www.w3.org/html/logo/badge/html5-badge-h-solo.png" alt="Valid HTML5" title="HTML5 Válido">
+        </a>
+        <a href="https://jigsaw.w3.org/css-validator/check/referer" target="_blank">
+            <img src="https://jigsaw.w3.org/css-validator/images/vcss-blue" alt="Valid CSS" title="CSS Válido">
+        </a>
+    </div>
+
+    <script src="{% static 'js/scripts.js' %}?v={{ now }}"></script>
+</body>
+
+</html>
