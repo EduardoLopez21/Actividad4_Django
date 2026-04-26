@@ -17,6 +17,8 @@
 
     <div class="contenedor-btn-inicio">
         <a href="/" class="btn-inicio">Inicio</a>
+        <a href="{% url 'agregar_servicio' %}?cat=gr" class="btn-submit"
+            style="text-decoration:none; margin-left: 10px;">Agregar Nueva Tecnología</a>
     </div>
 
     <div id="contenedor-gr"></div>
@@ -31,6 +33,10 @@
         </a>
     </div>
 
+    <script>
+        const nuevosDinamicos = '{{ nuevos_json|escapejs }}';
+        const nuevosDinamicosObj = nuevosDinamicos ? JSON.parse(nuevosDinamicos) : [];
+    </script>
     <script src="{% static 'js/scripts.js' %}?v={{ now }}"></script>
 </body>
 

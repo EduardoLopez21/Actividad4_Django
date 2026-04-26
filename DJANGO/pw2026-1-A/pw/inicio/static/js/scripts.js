@@ -14,6 +14,11 @@ const serviciosInicio = [
         titulo: "Gestion de Redes",
         descripcion: "Implementación de infraestructuras seguras y eficientes para tu empresa.",
         url: "/gr/"
+    },
+    {
+        titulo: "Inteligencia Artificial",
+        descripcion: "Sistemas capaces de realizar tareas que normalmente requieren inteligencia humana.",
+        url: "/ia/"
     }
 ];
 
@@ -162,20 +167,33 @@ const caracteristicasADB = [
 
 // 2. LA CREACION DE TARJETAS
 
-function crearTarjetas(listaDeDatos, idContenedor) {
+function crearTarjetas(listaDeDatos, idContenedor, catDinamica = null) {
     const contenedor = document.getElementById(idContenedor);
 
     // Si el contenedor NO existe en la página actual, detenemos la función para evitar errores
     if (!contenedor) return;
 
-    listaDeDatos.forEach(item => {
+    listaDeDatos.forEach((item, index) => {
         const tarjeta = document.createElement("div");
         tarjeta.className = "tarjeta-servicio";
-        tarjeta.style.cursor = "pointer";
+        tarjeta.style.cursor = (item.url && item.url !== "#") ? "pointer" : "default";
 
-        tarjeta.onclick = function () {
-            window.location.href = item.url;
-        };
+        if (item.url && item.url !== "#") {
+            tarjeta.onclick = function (e) {
+                if (!e.target.closest('.btn-eliminar-tarjeta')) {
+                    window.location.href = item.url;
+                }
+            };
+        }
+
+        if (catDinamica) {
+            const btnEliminar = document.createElement("a");
+            btnEliminar.href = `/eliminar/?cat=${catDinamica}&idx=${index}`;
+            btnEliminar.className = "btn-eliminar-tarjeta";
+            btnEliminar.innerHTML = "🗑️";
+            btnEliminar.title = "Eliminar servicio";
+            tarjeta.appendChild(btnEliminar);
+        }
 
         // Si el item tiene un icono, crear la imagen del logo
         if (item.icono) {
@@ -211,17 +229,48 @@ const divGR = document.getElementById("contenedor-gr");
 // Si encontró el div de inicio, dibuja los servicios principales
 if (divInicio) {
     crearTarjetas(serviciosInicio, "contenedor-inicio");
+    if (typeof nuevosDinamicosObj !== 'undefined' && nuevosDinamicosObj.length > 0) {
+        crearTarjetas(nuevosDinamicosObj, "contenedor-inicio", "inicio");
+    }
 }
 
 // Si encontró el div de Desarrollo de Software, dibuja las características de software
 if (divDSF) {
     crearTarjetas(caracteristicasDSF, "contenedor-dsf");
+    if (typeof nuevosDinamicosObj !== 'undefined' && nuevosDinamicosObj.length > 0) {
+        crearTarjetas(nuevosDinamicosObj, "contenedor-dsf", "dsf");
+    }
 }
 
 if (divADB) {
     crearTarjetas(caracteristicasADB, "contenedor-adb");
+    if (typeof nuevosDinamicosObj !== 'undefined' && nuevosDinamicosObj.length > 0) {
+        crearTarjetas(nuevosDinamicosObj, "contenedor-adb", "adb");
+    }
 }
 
 if (divGR) {
     crearTarjetas(caracteristicasGR, "contenedor-gr");
+    if (typeof nuevosDinamicosObj !== 'undefined' && nuevosDinamicosObj.length > 0) {
+        crearTarjetas(nuevosDinamicosObj, "contenedor-gr", "gr");
+    }
+}
+
+const divIA = document.getElementById("contenedor-ia");
+if (divIA) {
+    if (typeof nuevosIaDjango !== 'undefined' && nuevosIaDjango.length > 0) {
+        crearTarjetas(nuevosIaDjango, "contenedor-ia", "ia");
+    }
+}
+
+const divDinamico = document.getElementById("contenedor-dinamico");
+if (divDinamico) {
+    // Aquí sacamos el slug de la URL actual para que se pueda borrar
+    // Asumimos que la URL es del tipo /servicio/slug/
+    const urlParts = window.location.pathname.split('/').filter(Boolean);
+    const currentSlug = urlParts.length > 1 ? urlParts[1] : null;
+
+    if (typeof nuevosDinamicoDjango !== 'undefined' && nuevosDinamicoDjango.length > 0) {
+        crearTarjetas(nuevosDinamicoDjango, "contenedor-dinamico", currentSlug);
+    }
 }

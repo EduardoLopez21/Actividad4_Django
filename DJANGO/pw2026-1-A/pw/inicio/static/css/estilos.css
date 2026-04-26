@@ -1,179 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Inter', sans-serif;
 }
 
 body {
-    background-color: #f0f4f8;
-    color: #2c3e50;
+    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+    color: #2d3748;
     line-height: 1.6;
     padding: 40px 20px;
+    min-height: 100vh;
 }
 
-/* Estilos para tu encabezado */
+/* Encabezados */
 h1 {
     text-align: center;
     color: #1a365d;
-    margin-bottom: 10px;
-    font-size: 2.5rem;
+    margin-bottom: 15px;
+    font-size: 3rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-body>p {
+body > p {
     text-align: center;
-    color: #555;
-    max-width: 600px;
-    margin: 0 auto 15px auto;
+    color: #4a5568;
+    max-width: 650px;
+    margin: 0 auto 20px auto;
+    font-size: 1.1rem;
 }
 
 h2 {
     text-align: center;
     color: #2b6cb0;
-    /* Un azul tranquilo */
-    margin: 40px 0 20px 0;
+    margin: 40px 0 30px 0;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
-/* El contenedor donde tu JS va a inyectar las tarjetas */
-#contenedor-servicios {
+/* Contenedores de Tarjetas */
+#contenedor-inicio,
+#contenedor-dsf,
+#contenedor-adb,
+#contenedor-gr,
+#contenedor-ia,
+#contenedor-dinamico {
     display: flex;
     flex-wrap: wrap;
-    /* Permite que bajen de renglón si no caben */
     justify-content: center;
-    gap: 25px;
-    /* Espacio entre tarjetas */
-    max-width: 1000px;
-    margin: 0 auto;
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto 40px auto;
 }
 
-/* Diseño de las tarjetas creadas desde JS */
+/* Tarjetas */
 .tarjeta-servicio {
-    background-color: #ffffff;
-    border-radius: 10px;
-    padding: 30px;
-    width: 300px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    /* Sombra súper suave */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 35px 25px;
+    width: 320px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
 }
 
-/* Efecto hover: se levanta un poquito al pasar el mouse */
+.tarjeta-servicio::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, #3182ce, #63b3ed);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
 .tarjeta-servicio:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+}
+
+.tarjeta-servicio:hover::before {
+    transform: scaleX(1);
 }
 
 .tarjeta-servicio h3 {
     color: #2b6cb0;
     margin-bottom: 15px;
-    font-size: 1.3rem;
-    border-bottom: 2px solid #ebf8ff;
-    padding-bottom: 10px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-bottom: none;
 }
 
 .tarjeta-servicio p {
     text-align: left;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: #4a5568;
-    margin-bottom: 0;
+    line-height: 1.5;
 }
 
-/* Icono/logo dentro de cada tarjeta */
+/* Icono en tarjetas */
 .tarjeta-icono {
     display: block;
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 15px auto;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px auto;
     object-fit: contain;
-    transition: transform 0.3s ease;
+    transition: transform 0.4s ease;
+    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
 }
 
 .tarjeta-servicio:hover .tarjeta-icono {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.btn-eliminar-tarjeta {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    z-index: 10;
+    font-size: 1.1rem;
+}
+
+.btn-eliminar-tarjeta:hover {
+    background: #fee2e2;
     transform: scale(1.15);
 }
 
-/* --- Nuevo estilo para la imagen en dsf.html --- */
-.imagen-servicio {
-    display: block;
-    /* Necesario para centrarla */
-    margin: 30px auto;
-    /* Arriba/Abajo 30px, Auto para centrar horizontalmente */
-    max-width: 80%;
-    /* Que no ocupe todo el ancho de la página */
-    height: auto;
-    /* Mantiene la proporción para que no se deforme */
-    border-radius: 12px;
-    /* Bordes redondeados para combinar con las tarjetas */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    /* Sombra suave para dar profundidad */
-    border: 3px solid #ffffff;
-    /* Un pequeño marco blanco elegante */
-}
-
-/* El contenedor donde tu JS va a inyectar las tarjetas */
-#contenedor-inicio,
-#contenedor-dsf,
-#contenedor-adb,
-#contenedor-gr {
+/* Botones */
+.contenedor-btn-inicio {
     display: flex;
-    flex-wrap: wrap;
-    /* Permite que bajen de renglón si no caben */
     justify-content: center;
-    gap: 25px;
-    /* Espacio entre tarjetas */
-    max-width: 1000px;
-    margin: 0 auto;
+    gap: 15px;
+    margin: 30px auto 50px auto;
 }
 
-/* --- Botón para regresar al inicio --- */
-body .btn-inicio {
-    display: block;
-    width: fit-content;
-    margin: 30px auto;
-    padding: 12px 30px;
-    background-color: #2b6cb0;
-    color: #ffffff;
+.btn-inicio, .btn-submit, .btn-cancelar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 28px;
     font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
-    border-radius: 8px;
+    border-radius: 50px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-inicio {
+    background: #ffffff;
+    color: #2b6cb0;
+    border: 2px solid #2b6cb0;
 }
 
 .btn-inicio:hover {
-    background-color: #1a365d;
-    transform: translateY(-3px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+    background: #ebf8ff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(43, 108, 176, 0.15);
 }
 
-.btn-inicio:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.btn-submit {
+    background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
+    color: #ffffff;
 }
 
-.contenedor-btn-inicio {
-    text-align: center;
-    margin-top: 20px;
+.btn-submit:hover {
+    background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(43, 108, 176, 0.25);
 }
 
-/* --- Badges de Validación W3C --- */
+.btn-cancelar {
+    background: #ffffff;
+    color: #e53e3e;
+    border: 2px solid #e53e3e;
+}
+
+.btn-cancelar:hover {
+    background: #fff5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(229, 62, 62, 0.15);
+}
+
+form .btn-submit, form .btn-cancelar {
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+/* Formularios - Estilo Glassmorphism Premium */
+.contenedor-formulario {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 600px;
+    margin: 0 auto 50px auto;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255,255,255,0.6);
+}
+
+.form-grupo {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.form-grupo label {
+    display: block;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.form-control,
+.form-grupo input,
+.form-grupo textarea,
+.form-grupo select {
+    width: 100%;
+    padding: 14px 18px;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    background-color: #f8fafc;
+    font-size: 1rem;
+    color: #4a5568;
+    transition: all 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-grupo input:focus,
+.form-grupo textarea:focus,
+.form-grupo select:focus,
+.form-control:focus {
+    outline: none;
+    border-color: #3182ce;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+}
+
+.form-grupo textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.error-mensaje {
+    margin-top: 8px;
+    padding: 10px 14px;
+    background-color: #fff5f5;
+    border-left: 4px solid #e53e3e;
+    border-radius: 4px;
+    color: #c53030;
+    font-size: 0.85rem;
+}
+
+.error-mensaje p {
+    margin: 0 0 5px 0;
+    text-align: left;
+}
+
+.error-mensaje small {
+    color: #742a2a;
+}
+
+/* W3C Badges */
 .w3c-badges {
     position: fixed;
-    bottom: 15px;
-    right: 15px;
+    bottom: 20px;
+    right: 20px;
     display: flex;
-    gap: 10px;
+    gap: 12px;
     align-items: center;
     z-index: 1000;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+    background: rgba(255,255,255,0.8);
+    padding: 8px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s ease;
 }
 
 .w3c-badges:hover {
-    opacity: 1;
+    transform: translateY(-5px);
 }
 
 .w3c-badges img {
@@ -181,5 +306,4 @@ body .btn-inicio {
     height: 31px;
     width: auto;
     border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }

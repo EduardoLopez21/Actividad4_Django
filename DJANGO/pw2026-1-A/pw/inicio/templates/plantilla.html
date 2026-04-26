@@ -15,6 +15,11 @@
     <p>Integrantes de grupo: Eduardo Lopez Martinez y Luis Antonio Arguello Escutia</p>
 
     <h2>Secciones</h2>
+    
+    <div class="contenedor-btn-inicio">
+        <a href="{% url 'agregar_servicio' %}?cat=inicio" class="btn-submit"
+            style="text-decoration:none;">Agregar Nuevo Servicio</a>
+    </div>
 
     <div id="contenedor-inicio"></div>
 
@@ -28,6 +33,10 @@
         </a>
     </div>
 
+    <script>
+        const nuevosDinamicos = '{{ nuevos_json|escapejs }}';
+        const nuevosDinamicosObj = nuevosDinamicos ? JSON.parse(nuevosDinamicos) : [];
+    </script>
     <script src="{% static 'js/scripts.js' %}?v={{ now }}"></script>
 </body>
 
