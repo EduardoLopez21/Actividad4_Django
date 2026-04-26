@@ -14,11 +14,6 @@ const serviciosInicio = [
         titulo: "Gestion de Redes",
         descripcion: "Implementación de infraestructuras seguras y eficientes para tu empresa.",
         url: "/gr/"
-    },
-    {
-        titulo: "Inteligencia Artificial",
-        descripcion: "Creación de sistemas inteligentes que aprenden, razonan y toman decisiones autónomas.",
-        url: "/ia/"
     }
 ];
 
@@ -164,20 +159,6 @@ const caracteristicasADB = [
     }
 ];
 
-const caracteristicasIA = [
-    {
-        titulo: "Machine Learning",
-        descripcion: "Algoritmos que permiten a las computadoras aprender y hacer predicciones basadas en datos.",
-        icono: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
-        url: "#"
-    },
-    {
-        titulo: "Procesamiento de Lenguaje Natural",
-        descripcion: "Sistemas capaces de comprender, interpretar y generar lenguaje humano de forma útil.",
-        icono: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg",
-        url: "#"
-    }
-];
 
 // 2. LA CREACION DE TARJETAS
 
@@ -217,42 +198,7 @@ function crearTarjetas(listaDeDatos, idContenedor) {
         contenedor.appendChild(tarjeta);
     });
 }
-function crearTarjetasIa(listaDeDatos, idContenedor) {
-    const contenedor = document.getElementById(idContenedor);
 
-    // Si el contenedor NO existe en la página actual, detenemos la función para evitar errores
-    if (!contenedor) return;
-
-    listaDeDatos.forEach(item => {
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "tarjeta-servicio";
-        tarjeta.style.cursor = "pointer";
-
-        tarjeta.onclick = function () {
-            window.location.href = item.url;
-        };
-
-        // Si el item tiene un icono, crear la imagen del logo
-        if (item.icono) {
-            const iconoElemento = document.createElement("img");
-            iconoElemento.src = item.icono;
-            iconoElemento.alt = item.titulo + " logo";
-            iconoElemento.className = "tarjeta-icono";
-            tarjeta.appendChild(iconoElemento);
-        }
-
-        const tituloElemento = document.createElement("h3");
-        tituloElemento.textContent = item.titulo;
-
-        const descripcionElemento = document.createElement("p");
-        descripcionElemento.textContent = item.descripcion;
-
-        tarjeta.appendChild(tituloElemento);
-        tarjeta.appendChild(descripcionElemento);
-
-        contenedor.appendChild(tarjeta);
-    });
-}
 
 // 3. EJECUTAR LA FÁBRICA SEGÚN LA PÁGINA
 
@@ -261,57 +207,21 @@ const divInicio = document.getElementById("contenedor-inicio");
 const divDSF = document.getElementById("contenedor-dsf");
 const divADB = document.getElementById("contenedor-adb");
 const divGR = document.getElementById("contenedor-gr");
-const divIA = document.getElementById("contenedor-ia");
 
 // Si encontró el div de inicio, dibuja los servicios principales
 if (divInicio) {
-    let todosLosServicios = [...serviciosInicio];
-    // Agregamos los servicios guardados en sesión por Django (si existen)
-    if (typeof nuevosServiciosDjango !== 'undefined' && nuevosServiciosDjango.length > 0) {
-        todosLosServicios = todosLosServicios.concat(nuevosServiciosDjango);
-    }
-    crearTarjetas(todosLosServicios, "contenedor-inicio");
+    crearTarjetas(serviciosInicio, "contenedor-inicio");
 }
 
 // Si encontró el div de Desarrollo de Software, dibuja las características de software
 if (divDSF) {
-    let todosDSF = [...caracteristicasDSF];
-    if (typeof nuevosDSFDjango !== 'undefined' && nuevosDSFDjango.length > 0) {
-        todosDSF = todosDSF.concat(nuevosDSFDjango);
-    }
-    crearTarjetas(todosDSF, "contenedor-dsf");
+    crearTarjetas(caracteristicasDSF, "contenedor-dsf");
 }
 
 if (divADB) {
-    let todosADB = [...caracteristicasADB];
-    if (typeof nuevosADBDjango !== 'undefined' && nuevosADBDjango.length > 0) {
-        todosADB = todosADB.concat(nuevosADBDjango);
-    }
-    crearTarjetas(todosADB, "contenedor-adb");
+    crearTarjetas(caracteristicasADB, "contenedor-adb");
 }
 
 if (divGR) {
-    let todosGR = [...caracteristicasGR];
-    if (typeof nuevosGRDjango !== 'undefined' && nuevosGRDjango.length > 0) {
-        todosGR = todosGR.concat(nuevosGRDjango);
-    }
-    crearTarjetas(todosGR, "contenedor-gr");
-}
-
-if (divIA) {
-    let todosIA = [...caracteristicasIA];
-    if (typeof nuevosIaDjango !== 'undefined' && nuevosIaDjango.length > 0) {
-        todosIA = todosIA.concat(nuevosIaDjango);
-    }
-    // Using the original crearTarjetas function
-    crearTarjetas(todosIA, "contenedor-ia");
-}
-
-const divDinamico = document.getElementById("contenedor-dinamico");
-if (divDinamico) {
-    let todosDinamico = [];
-    if (typeof nuevosDinamicoDjango !== 'undefined' && nuevosDinamicoDjango.length > 0) {
-        todosDinamico = todosDinamico.concat(nuevosDinamicoDjango);
-    }
-    crearTarjetas(todosDinamico, "contenedor-dinamico");
+    crearTarjetas(caracteristicasGR, "contenedor-gr");
 }

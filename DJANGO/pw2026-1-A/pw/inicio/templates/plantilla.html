@@ -16,17 +16,7 @@
 
     <h2>Secciones</h2>
 
-    <div class="contenedor-btn-inicio">
-        <a href="{% url 'agregar_servicio' %}" class="btn-submit" style="text-decoration:none;">Agregar Nuevo
-            Servicio</a>
-    </div>
-
     <div id="contenedor-inicio"></div>
-
-    <!-- Inyectamos los servicios nuevos desde Django (Sesión) -->
-    <script>
-        const nuevosServiciosDjango = JSON.parse('{{ nuevos_servicios_json|escapejs }}');
-    </script>
 
     <!-- W3C Badges -->
     <div class="w3c-badges">

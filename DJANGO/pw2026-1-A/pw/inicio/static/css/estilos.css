@@ -114,9 +114,7 @@ h2 {
 #contenedor-inicio,
 #contenedor-dsf,
 #contenedor-adb,
-#contenedor-gr,
-#contenedor-ia,
-#contenedor-dinamico {
+#contenedor-gr {
     display: flex;
     flex-wrap: wrap;
     /* Permite que bajen de renglón si no caben */
@@ -184,86 +182,4 @@ body .btn-inicio {
     width: auto;
     border-radius: 4px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-/* --- Estilos para el Formulario (Actividad 2) --- */
-.contenedor-formulario {
-    background-color: #ffffff;
-    max-width: 500px;
-    margin: 30px auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.form-grupo {
-    margin-bottom: 20px;
-    text-align: left;
-}
-
-.form-grupo label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 8px;
-    color: #2b6cb0;
-}
-
-.form-grupo input,
-.form-grupo textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: border-color 0.3s ease;
-}
-
-.form-grupo input:focus,
-.form-grupo textarea:focus {
-    border-color: #2b6cb0;
-    outline: none;
-}
-
-.error-mensaje {
-    background-color: #fff5f5;
-    color: #c53030;
-    border-left: 4px solid #c53030;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 0.9rem;
-    border-radius: 4px;
-}
-
-.btn-submit {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: #48bb78;
-    color: #ffffff;
-    font-size: 1rem;
-    font-weight: 600;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-submit:hover {
-    background-color: #38a169;
-}
-
-.btn-cancelar {
-    display: inline-block;
-    padding: 12px 30px;
-    background-color: #e2e8f0;
-    color: #4a5568;
-    font-size: 1rem;
-    font-weight: 600;
-    text-decoration: none;
-    border-radius: 8px;
-    margin-left: 10px;
-    transition: background-color 0.3s ease;
-}
-
-.btn-cancelar:hover {
-    background-color: #cbd5e0;
 }

@@ -19,14 +19,9 @@
 
     <div class="contenedor-btn-inicio">
         <a href="/" class="btn-inicio">Inicio</a>
-        <a href="{% url 'agregar_servicio' %}?cat=dsf" class="btn-submit" style="text-decoration:none; margin-left: 10px;">Agregar Nueva Tecnología</a>
     </div>
 
     <div id="contenedor-dsf"></div>
-
-    <script>
-        const nuevosDSFDjango = JSON.parse('{{ nuevos_json|escapejs }}');
-    </script>
 
     <!-- W3C Badges -->
     <div class="w3c-badges">
