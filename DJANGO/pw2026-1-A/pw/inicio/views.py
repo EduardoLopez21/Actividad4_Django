@@ -1,61 +1,48 @@
 import json
 import time
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from .forms import ServicioForm
+from .models import Servicio
 
-def get_nuevos_servicios(request, categoria):
-    servicios = request.session.get('nuevos_servicios', {})
-    return servicios.get(categoria, [])
+def get_nuevos_servicios(categoria):
+    servicios = Servicio.objects.filter(categoria=categoria)
+    return [{'titulo': s.titulo, 'descripcion': s.descripcion, 'url': s.url, 'icono': s.icono, 'id': s.id} for s in servicios]
 
 def inicio(request):
-    nuevos = get_nuevos_servicios(request, 'inicio')
+    nuevos = get_nuevos_servicios('inicio')
     return render(request, 'plantilla.html', {'now': int(time.time()), 'nuevos_json': json.dumps(nuevos)})
 
 def dsf(request):
-    nuevos = get_nuevos_servicios(request, 'dsf')
+    nuevos = get_nuevos_servicios('dsf')
     return render(request, 'dsf.html', {'now': int(time.time()), 'nuevos_json': json.dumps(nuevos)})
 
 def adb(request):
-    nuevos = get_nuevos_servicios(request, 'adb')
+    nuevos = get_nuevos_servicios('adb')
     return render(request, 'adb.html', {'now': int(time.time()), 'nuevos_json': json.dumps(nuevos)})
 
 def gr(request):
-    nuevos = get_nuevos_servicios(request, 'gr')
+    nuevos = get_nuevos_servicios('gr')
     return render(request, 'gr.html', {'now': int(time.time()), 'nuevos_json': json.dumps(nuevos)})
 
 def ia(request):
-    nuevos = get_nuevos_servicios(request, 'ia')
+    nuevos = get_nuevos_servicios('ia')
     return render(request, 'ia.html', {'now': int(time.time()), 'nuevos_json': json.dumps(nuevos)})
 
 def agregar_servicio(request):
     if request.method == 'POST':
         form = ServicioForm(request.POST)
         if form.is_valid():
-            categoria = form.cleaned_data['categoria']
-            url = form.cleaned_data['url']
-            if categoria == 'inicio' and (not url or url == '#'):
-                from django.utils.text import slugify
-                slug = slugify(form.cleaned_data['titulo'])
-                url = reverse('servicio_dinamico', args=[slug])
-            elif not url:
-                url = '#'
-
-            nuevo_servicio = {
-                'titulo': form.cleaned_data['titulo'],
-                'descripcion': form.cleaned_data['descripcion'],
-                'url': url,
-                'icono': form.cleaned_data['icono'] or '',
-            }
+            nuevo_servicio = Servicio(
+                categoria=form.cleaned_data['categoria'],
+                titulo=form.cleaned_data['titulo'],
+                descripcion=form.cleaned_data['descripcion'],
+                url=form.cleaned_data['url'],
+                icono=form.cleaned_data['icono'] or ''
+            )
+            nuevo_servicio.save()
             
-            servicios_dict = request.session.get('nuevos_servicios', {})
-            if categoria not in servicios_dict:
-                servicios_dict[categoria] = []
-            
-            servicios_dict[categoria].append(nuevo_servicio)
-            request.session['nuevos_servicios'] = servicios_dict
-            request.session.modified = True
-            
+            categoria = nuevo_servicio.categoria
             if categoria in ['inicio', 'dsf', 'adb', 'gr', 'ia']:
                 return redirect(categoria)
             else:
@@ -72,13 +59,10 @@ def eliminar_servicio(request):
     if categoria and index is not None:
         try:
             index = int(index)
-            servicios_dict = request.session.get('nuevos_servicios', {})
-            if categoria in servicios_dict and 0 <= index < len(servicios_dict[categoria]):
-                servicios_dict[categoria].pop(index)
-                if not servicios_dict[categoria]:
-                    del servicios_dict[categoria]
-                request.session['nuevos_servicios'] = servicios_dict
-                request.session.modified = True
+            # Find the service at the given index in the category
+            servicios = list(Servicio.objects.filter(categoria=categoria).order_by('id'))
+            if 0 <= index < len(servicios):
+                servicios[index].delete()
         except ValueError:
             pass
             
@@ -88,8 +72,11 @@ def eliminar_servicio(request):
         return redirect('servicio_dinamico', slug=categoria)
     return redirect('inicio')
 
+def notas(request):
+    return render(request, 'notas.html')
+
 def servicio_dinamico(request, slug):
-    nuevos = get_nuevos_servicios(request, slug)
+    nuevos = get_nuevos_servicios(slug)
     servicio_info = {
         'titulo': slug.replace('-', ' ').title(),
         'descripcion': f'Información sobre {slug.replace("-", " ")}'
@@ -99,4 +86,4 @@ def servicio_dinamico(request, slug):
         'servicio': servicio_info,
         'slug': slug,
         'nuevos_json': json.dumps(nuevos)
-    })
+    })

@@ -9,5 +9,6 @@ urlpatterns = [
     path('ia/', views.ia, name='ia'),
     path('agregar/', views.agregar_servicio, name='agregar_servicio'),
     path('eliminar/', views.eliminar_servicio, name='eliminar_servicio'),
+    path('notas/', views.notas, name='notas'),
     path('servicio/<slug:slug>/', views.servicio_dinamico, name='servicio_dinamico'),
 ]
